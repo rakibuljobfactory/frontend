@@ -9,6 +9,13 @@ import { Dashboard } from "./user/Dashboard"; // User dashboard
 import { Dashboard as VendorDashboard } from "./vendor/Dashboard"; // Vendor dashboard
 import { CreateJob } from "./vendor/CreateJob";
 import { MyList } from "./vendor/MyList";
+import { AdminDashboard } from "./admin/AdminDashboard"; // Admin dashboard
+import { AllVendor } from "./admin/AllVendor";
+import { PendingVendor } from "./admin/PendingVendor";
+import { ActiveVendor } from "./admin/ActiveVendor";
+import { ShowPassword } from "./admin/ShowPassword"; // Admin: Show Passwords
+import { JobAnalytics } from "./admin/JobAnalytics"; // Admin job analytics
+import { Footer } from './Footer';
 
 // ==========================================
 // 1. ROUTE GUARD COMPONENT (ProtectedRoute)
@@ -48,9 +55,11 @@ function App() {
           {/* Public / Semi-Public Routes */}
           {/* <Route path="/home" element={<Home />} /> */}
           <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           {/* Auth Redirects: If already logged in, skip the Auth layout screens */}
           {/* <Route path="/" element={isAuthenticated ? <Navigate to="/home" replace /> : <Login />} /> */}
-          <Route path="/register" element={isAuthenticated ? <Navigate to="/home" replace /> : <Register />} />
+          {/* <Route path="/register" element={isAuthenticated ? <Navigate to="/home" replace /> : <Register />} /> */}
 
           {/* Regular User Channels (role: 'user') */}
           <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
@@ -64,10 +73,22 @@ function App() {
             <Route path="/my-list" element={<MyList />} />
           </Route>
 
+
+          {/* Admin Control Panel (role: 'admin') */}
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route path="/admin-dashboard/all-vendors" element={<AllVendor />} />
+            <Route path="/admin-dashboard/pending-vendors" element={<PendingVendor />} />
+            <Route path="/admin-dashboard/active-vendors" element={<ActiveVendor />} />
+            <Route path="/admin-dashboard/jobs" element={<JobAnalytics />} />
+            <Route path="/admin-dashboard/users-passwords" element={<ShowPassword />} />
+          </Route>
+
           {/* 404 Fallback Catch */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
+      <Footer/>
     </BrowserRouter>
   );
 }

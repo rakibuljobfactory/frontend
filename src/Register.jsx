@@ -14,7 +14,7 @@ export const Register = () => {
         email: "",
         phone: "",
         password: "",
-        role: "", // डिफ़ॉल्ट रूप से खाली रखा है ताकि ड्रॉपडाउन में पहला ऑप्शन सेलेक्ट करने को कहे
+        role: "", 
     });
 
     const handleChange = (e) => {

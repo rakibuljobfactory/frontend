@@ -115,7 +115,7 @@ export const Dashboard = () => {
                         </h1>
                         <p className="text-xs text-slate-500">{user.email}</p>
                     </div>
-                    
+
                     <button
                         onClick={handleLogout}
                         className="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition text-red-600 hover:border-red-200"
@@ -127,7 +127,7 @@ export const Dashboard = () => {
 
             {/* Dashboard Core Interface Workspace */}
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                
+
                 {/* Search Bar & Filtering Controls */}
                 <section className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-8">
                     <form onSubmit={handleSearchSubmit} className="flex flex-col md:flex-row items-center gap-4">
@@ -194,89 +194,89 @@ export const Dashboard = () => {
                         </div>
 
                         {/* Job Listing Cards Container */}
-                      {/* Job Listing Cards Container */}
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {jobs.map((job) => (
-        <article 
-            key={job._id}
-            className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between group"
-        >
-            <div>
-                {/* Badges / Header Metadata */}
-                <div className="flex items-start justify-between gap-2 mb-3">
-                    <span className="inline-block text-xs font-semibold px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full">
-                        {job.jobType}
-                    </span>
-                    <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
-                        {job.status}
-                    </span>
-                </div>
+                        {/* Job Listing Cards Container */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {jobs.map((job) => (
+                                <article
+                                    key={job._id}
+                                    className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between group"
+                                >
+                                    <div>
+                                        {/* Badges / Header Metadata */}
+                                        <div className="flex items-start justify-between gap-2 mb-3">
+                                            <span className="inline-block text-xs font-semibold px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full">
+                                                {job.jobType}
+                                            </span>
+                                            <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
+                                                {job.status}
+                                            </span>
+                                        </div>
 
-                {/* Main Titles */}
-                <h3 className="font-bold text-slate-900 group-hover:text-blue-600 transition text-lg line-clamp-1">
-                    {job.title}
-                </h3>
-                
-                <p className="text-sm font-semibold text-slate-600 mt-0.5">
-                    {job.companyName}
-                </p>
+                                        {/* Main Titles */}
+                                        <h3 className="font-bold text-slate-900 group-hover:text-blue-600 transition text-lg line-clamp-1">
+                                            {job.title}
+                                        </h3>
 
-                {/* Core Specifications Grid (Location, Salary & Poster Info) */}
-                <div className="space-y-2 mt-4">
-                    {/* Location Param */}
-                    <div className="flex items-center gap-2 text-slate-500 text-xs">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 flex-shrink-0 text-slate-400">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                        </svg>
-                        <span className="truncate">{job.location}</span>
-                    </div>
+                                        <p className="text-sm font-semibold text-slate-600 mt-0.5">
+                                            {job.companyName}
+                                        </p>
 
-                    {/* Salary Compensation Range Param */}
-                    <div className="flex items-center gap-2 text-slate-700 text-xs font-medium bg-slate-50 p-2 rounded-lg">
-                        <span className="text-slate-400 font-bold font-mono">₹</span>
-                        <span>{job.salaryRange || "Not Disclosed"}</span>
-                    </div>
-                </div>
+                                        {/* Core Specifications Grid (Location, Salary & Poster Info) */}
+                                        <div className="space-y-2 mt-4">
+                                            {/* Location Param */}
+                                            <div className="flex items-center gap-2 text-slate-500 text-xs">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 flex-shrink-0 text-slate-400">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                                                </svg>
+                                                <span className="truncate">{job.location}</span>
+                                            </div>
 
-                {/* Brief Paragraph Description Truncated at 3 lines Max */}
-                <p className="text-xs text-slate-500 mt-4 line-clamp-3 leading-relaxed border-t border-dashed border-slate-100 pt-3">
-                    {job.description}
-                </p>
-            </div>
+                                            {/* Salary Compensation Range Param */}
+                                            <div className="flex items-center gap-2 text-slate-700 text-xs font-medium bg-slate-50 p-2 rounded-lg">
+                                                <span className="text-slate-400 font-bold font-mono">₹</span>
+                                                <span>{job.salaryRange || "Not Disclosed"}</span>
+                                            </div>
+                                        </div>
 
-            {/* Bottom Panel Component: Contacts and Utility actions */}
-            <div className="mt-6 pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="flex flex-col">
-                    {/* Dynamic HR Email Link Context */}
-                    <a 
-                        href={`mailto:${job.contact}`} 
-                        className="text-xs text-blue-600 hover:underline font-medium truncate max-w-[160px]"
-                        title={`Contact ${job.contact}`}
-                    >
-                        {job.contact}
-                    </a>
-                    
-                    {/* Poster Verification Flag
+                                        {/* Brief Paragraph Description Truncated at 3 lines Max */}
+                                        <p className="text-xs text-slate-500 mt-4 line-clamp-3 leading-relaxed border-t border-dashed border-slate-100 pt-3">
+                                            {job.description}
+                                        </p>
+                                    </div>
+
+                                    {/* Bottom Panel Component: Contacts and Utility actions */}
+                                    <div className="mt-6 pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                        <div className="flex flex-col">
+                                            {/* Dynamic HR Email Link Context */}
+                                            <a
+                                                href={`mailto:${job.contact}`}
+                                                className="text-xs text-blue-600 hover:underline font-medium truncate max-w-[160px]"
+                                                title={`Contact ${job.contact}`}
+                                            >
+                                                {job.contact}
+                                            </a>
+
+                                            {/* Poster Verification Flag
                     <span className="text-[10px] text-slate-400 mt-0.5">
                         Posted by: <span className="font-medium text-slate-500">{job.postedByType}</span>
                     </span> */}
-                </div>
+                                        </div>
 
-                <div className="flex items-center justify-between sm:justify-end gap-2 mt-2 sm:mt-0">
-                    <span className="text-[10px] text-slate-400 whitespace-nowrap">
-                        {new Date(job.createdAt).toLocaleDateString(undefined, {
-                            month: 'short',
-                            day: 'numeric'
-                        })}
-                    </span>
-                    
-                    
-                </div>
-            </div>
-        </article>
-    ))}
-</div>
+                                        <div className="flex items-center justify-between sm:justify-end gap-2 mt-2 sm:mt-0">
+                                            <span className="text-[10px] text-slate-400 whitespace-nowrap">
+                                                {new Date(job.createdAt).toLocaleDateString(undefined, {
+                                                    month: 'short',
+                                                    day: 'numeric'
+                                                })}
+                                            </span>
+
+
+                                        </div>
+                                    </div>
+                                </article>
+                            ))}
+                        </div>
 
                         {/* Pagination Interface Controls */}
                         {pagination.totalPages > 1 && (
@@ -288,7 +288,7 @@ export const Dashboard = () => {
                                 >
                                     Previous
                                 </button>
-                                
+
                                 <span className="text-sm text-slate-600 mx-4 font-medium">
                                     Page {page} of {pagination.totalPages}
                                 </span>
