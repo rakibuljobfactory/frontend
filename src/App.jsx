@@ -16,6 +16,8 @@ import { ActiveVendor } from "./admin/ActiveVendor";
 import { ShowPassword } from "./admin/ShowPassword"; // Admin: Show Passwords
 import { JobAnalytics } from "./admin/JobAnalytics"; // Admin job analytics
 import { Footer } from './Footer';
+import {AdminJobsManager} from './admin/AdminJobsManager'; // Admin job management
+
 
 // ==========================================
 // 1. ROUTE GUARD COMPONENT (ProtectedRoute)
@@ -82,6 +84,7 @@ function App() {
             <Route path="/admin-dashboard/active-vendors" element={<ActiveVendor />} />
             <Route path="/admin-dashboard/jobs" element={<JobAnalytics />} />
             <Route path="/admin-dashboard/users-passwords" element={<ShowPassword />} />
+            <Route path="/admin-dashboard/manage-jobs" element={<AdminJobsManager/>} />
           </Route>
 
           {/* 404 Fallback Catch */}
