@@ -27,7 +27,6 @@ export const Register = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
 
-        // यदि यूजर ने कोई रोल नहीं चुना है
         if (!formData.role) {
             toast.error("Please select a role (Job Seeker or Employer)");
             return;
