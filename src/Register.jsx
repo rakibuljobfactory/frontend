@@ -14,7 +14,7 @@ export const Register = () => {
         email: "",
         phone: "",
         password: "",
-        role: "", 
+        role: "",
     });
 
     const handleChange = (e) => {
@@ -37,7 +37,7 @@ export const Register = () => {
             setLoading(true);
 
             const { data } = await axios.post(
-                "http://localhost:5000/api/users/register",
+                "https://backend-tau-two-76.vercel.app/api/users/register",
                 formData
             );
 

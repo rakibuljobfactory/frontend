@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Navbar } from "./Navbar";
 
-const BASE_URL = "http://localhost:5000/api/admin";
+const BASE_URL = "https://backend-tau-two-76.vercel.app/api/admin";
 
 export const AllVendor = () => {
   const [vendors, setVendors] = useState([]);
@@ -60,7 +60,7 @@ export const AllVendor = () => {
       if (showAlert) {
         alert(
           res.data?.message ||
-            `Sync complete! Modified ${res.data?.modifiedCount || 0} vendors.`
+          `Sync complete! Modified ${res.data?.modifiedCount || 0} vendors.`
         );
         // Sync button click hone par ताज़ा data wapas fetch karein
         await fetchVendors();
@@ -143,11 +143,11 @@ export const AllVendor = () => {
         prev.map((v) =>
           v._id === selectedVendor._id
             ? {
-                ...v,
-                paymentDate,
-                End_date: endDate,
-                PaymentAmount: paymentAmount,
-              }
+              ...v,
+              paymentDate,
+              End_date: endDate,
+              PaymentAmount: paymentAmount,
+            }
             : v
         )
       );
@@ -346,11 +346,10 @@ export const AllVendor = () => {
 
                     <td className="px-4 py-3.5 text-center">
                       <span
-                        className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
-                          getPaymentStatus(vendor.End_date) === "Active"
-                            ? "bg-emerald-50 text-emerald-700"
-                            : "bg-rose-50 text-rose-700"
-                        }`}
+                        className={`px-2.5 py-1 rounded-full text-xs font-semibold ${getPaymentStatus(vendor.End_date) === "Active"
+                          ? "bg-emerald-50 text-emerald-700"
+                          : "bg-rose-50 text-rose-700"
+                          }`}
                       >
                         {getPaymentStatus(vendor.End_date)}
                       </span>

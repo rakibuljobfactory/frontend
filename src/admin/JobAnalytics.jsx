@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Navbar } from "./Navbar";
 
-const BASE_URL = "http://localhost:5000/api/admin";
+const BASE_URL = "https://backend-tau-two-76.vercel.app/api/admin";
 
 export const JobAnalytics = () => {
   const [stats, setStats] = useState({

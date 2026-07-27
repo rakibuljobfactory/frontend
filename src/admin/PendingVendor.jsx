@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Navbar } from "./Navbar";
 // Base API route ko clean rakhen
-const API_BASE_URL = "http://localhost:5000/api/admin";
+const API_BASE_URL = "https://backend-tau-two-76.vercel.app/api/admin";
 
 export const PendingVendor = () => {
   const [vendors, setVendors] = useState([]);

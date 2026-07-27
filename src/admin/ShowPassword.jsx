@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Navbar } from "./Navbar";
 
-const BASE_URL = "http://localhost:5000/api/admin";
+const BASE_URL = "https://backend-tau-two-76.vercel.app/api/admin";
 
 export const ShowPassword = () => {
   const [users, setUsers] = useState([]);
@@ -62,7 +62,7 @@ export const ShowPassword = () => {
               User Password Management
             </h1>
             <p className="text-xs text-gray-500 mt-1">
-              Total Records: <span className="font-semibold text-gray-700">{totalUsers}</span> | 
+              Total Records: <span className="font-semibold text-gray-700">{totalUsers}</span> |
               Showing 15 records per page
             </p>
           </div>
@@ -113,11 +113,10 @@ export const ShowPassword = () => {
 
                       <td className="px-4 py-3 text-center">
                         <span
-                          className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full capitalize ${
-                            user.role === "vendor"
-                              ? "bg-purple-50 text-purple-700 border border-purple-200"
-                              : "bg-blue-50 text-blue-700 border border-blue-200"
-                          }`}
+                          className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full capitalize ${user.role === "vendor"
+                            ? "bg-purple-50 text-purple-700 border border-purple-200"
+                            : "bg-blue-50 text-blue-700 border border-blue-200"
+                            }`}
                         >
                           {user.role}
                         </span>
