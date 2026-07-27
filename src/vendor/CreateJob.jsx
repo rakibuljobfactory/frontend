@@ -53,7 +53,7 @@ export const CreateJob = () => {
 
             // Execute POST routing pipelines targeting your exact path architecture
             const { data } = await axios.post(
-                "https://backend-tau-two-76.vercel.app/api/job/create",
+                "https://backend-0a04.onrender.com/api/job/create",
                 formData,
                 {
                     headers: {

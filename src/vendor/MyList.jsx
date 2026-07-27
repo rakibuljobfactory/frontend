@@ -55,7 +55,7 @@ export const MyList = () => {
             if (statusFilter) params.append("status", statusFilter);
             if (jobTypeFilter) params.append("jobType", jobTypeFilter);
 
-            const { data } = await axios.get(`https://backend-tau-two-76.vercel.app/api/job/my-postings?${params.toString()}`, {
+            const { data } = await axios.get(`https://backend-0a04.onrender.com/api/job/my-postings?${params.toString()}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -91,7 +91,7 @@ export const MyList = () => {
             const token = localStorage.getItem("token");
 
             const { data } = await axios.patch(
-                `https://backend-tau-two-76.vercel.app/api/job/status/${jobId}`,
+                `https://backend-0a04.onrender.com/api/job/status/${jobId}`,
                 { status: nextStatus },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -115,7 +115,7 @@ export const MyList = () => {
 
         try {
             const token = localStorage.getItem("token");
-            const { data } = await axios.delete(`https://backend-tau-two-76.vercel.app/api/job/delete/${jobId}`, {
+            const { data } = await axios.delete(`https://backend-0a04.onrender.com/api/job/delete/${jobId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -152,7 +152,7 @@ export const MyList = () => {
             const token = localStorage.getItem("token");
 
             const { data } = await axios.put(
-                `https://backend-tau-two-76.vercel.app/api/job/update/${jobId}`,
+                `https://backend-0a04.onrender.com/api/job/update/${jobId}`,
                 editFormData,
                 { headers: { Authorization: `Bearer ${token}` } }
             );

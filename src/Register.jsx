@@ -36,7 +36,7 @@ export const Register = () => {
             setLoading(true);
 
             const { data } = await axios.post(
-                "https://backend-tau-two-76.vercel.app/api/users/register",
+                "https://backend-0a04.onrender.com/api/users/register",
                 formData
             );
 

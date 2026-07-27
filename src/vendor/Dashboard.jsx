@@ -11,7 +11,7 @@ export const Dashboard = () => {
   const fetchDashboard = async () => {
     try {
       const { data } = await axios.get(
-        "https://backend-tau-two-76.vercel.app/api/vendor/vendor-dashboard",
+        "https://backend-0a04.onrender.com/api/vendor/vendor-dashboard",
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -54,7 +54,7 @@ export const Dashboard = () => {
                 params.append("jobType", jobType);
             }
 
-            const { data } = await axios.get(`https://backend-tau-two-76.vercel.app/api/jobs?${params.toString()}`, {
+            const { data } = await axios.get(`https://backend-0a04.onrender.com/api/jobs?${params.toString()}`, {
                 headers: {
                     Authorization: `Bearer ${token}` // Attach token securely in the header pipeline
                 }
