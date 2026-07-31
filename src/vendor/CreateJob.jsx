@@ -3,17 +3,17 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Navbar } from "./Navbar";
-import { 
-  Briefcase, 
-  Building2, 
-  MapPin, 
-  Layers, 
-  IndianRupee, 
-  Mail, 
-  FileText, 
-  PlusCircle, 
-  ArrowLeft,
-  Loader2
+import {
+    Briefcase,
+    Building2,
+    MapPin,
+    Layers,
+    IndianRupee,
+    Mail,
+    FileText,
+    PlusCircle,
+    ArrowLeft,
+    Loader2
 } from "lucide-react";
 
 export const CreateJob = () => {
@@ -67,7 +67,7 @@ export const CreateJob = () => {
             const token = localStorage.getItem("token");
 
             const { data } = await axios.post(
-                "http://localhost:5000/api/job/create",
+                "https://backend-8sm3.onrender.com/api/job/create",
                 formData,
                 {
                     headers: {
@@ -95,7 +95,7 @@ export const CreateJob = () => {
             <Navbar />
 
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-                
+
                 {/* Back Button */}
                 <button
                     type="button"
@@ -108,7 +108,7 @@ export const CreateJob = () => {
 
                 {/* Form Card */}
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
-                    
+
                     {/* Header Banner */}
                     <div className="bg-gradient-to-r from-slate-900 via-indigo-950/50 to-slate-900 border-b border-slate-800 p-6 sm:p-8">
                         <div className="flex items-center space-x-3 mb-2">
@@ -128,7 +128,7 @@ export const CreateJob = () => {
 
                     {/* Form Container */}
                     <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-6">
-                        
+
                         {/* Row 1: Title & Company Name */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>

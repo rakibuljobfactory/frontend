@@ -78,7 +78,7 @@ export const AdminJobsManager = () => {
             if (jobTypeFilter) params.append("jobType", jobTypeFilter);
 
             const { data } = await axios.get(
-                `http://localhost:5000/api/job/my-postings?${params.toString()}`,
+                `https://backend-8sm3.onrender.com/api/job/my-postings?${params.toString()}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
@@ -118,7 +118,7 @@ export const AdminJobsManager = () => {
             const token = localStorage.getItem("token");
 
             const { data } = await axios.post(
-                "http://localhost:5000/api/job/create",
+                "https://backend-8sm3.onrender.com/api/job/create",
                 createFormData,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -152,7 +152,7 @@ export const AdminJobsManager = () => {
             const token = localStorage.getItem("token");
 
             const { data } = await axios.patch(
-                `http://localhost:5000/api/job/status/${jobId}`,
+                `https://backend-8sm3.onrender.com/api/job/status/${jobId}`,
                 { status: nextStatus },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -176,7 +176,7 @@ export const AdminJobsManager = () => {
         try {
             const token = localStorage.getItem("token");
             const { data } = await axios.delete(
-                `http://localhost:5000/api/job/delete/${jobId}`,
+                `https://backend-8sm3.onrender.com/api/job/delete/${jobId}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
@@ -215,7 +215,7 @@ export const AdminJobsManager = () => {
             const token = localStorage.getItem("token");
 
             const { data } = await axios.put(
-                `http://localhost:5000/api/job/update/${jobId}`,
+                `https://backend-8sm3.onrender.com/api/job/update/${jobId}`,
                 editFormData,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -258,8 +258,8 @@ export const AdminJobsManager = () => {
                         <button
                             onClick={() => setActiveTab("listings")}
                             className={`flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs font-semibold transition ${activeTab === "listings"
-                                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
-                                    : "text-slate-400 hover:text-white"
+                                ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
+                                : "text-slate-400 hover:text-white"
                                 }`}
                         >
                             All Admin Jobs ({pagination.totalJobs})
@@ -267,8 +267,8 @@ export const AdminJobsManager = () => {
                         <button
                             onClick={() => setActiveTab("create")}
                             className={`flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs font-semibold transition ${activeTab === "create"
-                                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
-                                    : "text-slate-400 hover:text-white"
+                                ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
+                                : "text-slate-400 hover:text-white"
                                 }`}
                         >
                             + Post New Job
@@ -318,8 +318,8 @@ export const AdminJobsManager = () => {
                                             key={pill.label}
                                             onClick={() => { setStatusFilter(pill.value); setPage(1); }}
                                             className={`text-xs px-2.5 py-1 rounded-md font-medium transition ${statusFilter === pill.value
-                                                    ? "bg-indigo-600 text-white"
-                                                    : "text-slate-400 hover:text-slate-200"
+                                                ? "bg-indigo-600 text-white"
+                                                : "text-slate-400 hover:text-slate-200"
                                                 }`}
                                         >
                                             {pill.label}
@@ -406,8 +406,8 @@ export const AdminJobsManager = () => {
                                                             disabled={actionLoadingId === job._id}
                                                             onClick={() => handleStatusToggle(job._id, job.status)}
                                                             className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-bold border transition duration-200 ${job.status === "Active"
-                                                                    ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20"
-                                                                    : "bg-rose-500/10 text-rose-400 border-rose-500/30 hover:bg-rose-500/20"
+                                                                ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20"
+                                                                : "bg-rose-500/10 text-rose-400 border-rose-500/30 hover:bg-rose-500/20"
                                                                 }`}
                                                         >
                                                             <span className={`w-1.5 h-1.5 rounded-full ${job.status === "Active" ? "bg-emerald-400" : "bg-rose-400"}`}></span>

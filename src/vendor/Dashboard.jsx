@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Navbar } from "./Navbar";
-import { 
-  Briefcase, 
-  CheckCircle2, 
-  FileEdit, 
-  XCircle, 
-  Archive, 
-  MapPin, 
-  Layers, 
-  Clock, 
-  User, 
+import {
+  Briefcase,
+  CheckCircle2,
+  FileEdit,
+  XCircle,
+  Archive,
+  MapPin,
+  Layers,
+  Clock,
+  User,
   Mail,
   TrendingUp,
   AlertCircle
@@ -26,7 +26,7 @@ export const Dashboard = () => {
   const fetchDashboard = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:5000/api/vendor/vendor-dashboard",
+        "https://backend-8sm3.onrender.com/api/vendor/vendor-dashboard",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -79,7 +79,7 @@ export const Dashboard = () => {
         <div className="flex flex-col justify-center items-center h-[70vh] gap-3">
           <AlertCircle className="w-12 h-12 text-rose-500" />
           <p className="text-slate-400 font-medium">{error || "No dashboard data available."}</p>
-          <button 
+          <button
             onClick={fetchDashboard}
             className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-xl text-sm font-semibold transition"
           >
@@ -112,7 +112,7 @@ export const Dashboard = () => {
                 <span>{dashboard.vendor?.email}</span>
               </div>
             </div>
-            
+
             <div className="flex items-center space-x-3 bg-slate-950/60 backdrop-blur-md px-4 py-2.5 rounded-xl border border-slate-800 text-xs text-slate-300">
               <User className="w-4 h-4 text-indigo-400 shrink-0" />
               <span>Account Status: <span className="text-emerald-400 font-semibold">Verified</span></span>
