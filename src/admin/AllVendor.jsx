@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Navbar } from "./Navbar";
 
-const BASE_URL = "https://backend-0a04.onrender.com/api/admin";
+const BASE_URL = "http://localhost:5000/api/admin";
 
 export const AllVendor = () => {
   const [vendors, setVendors] = useState([]);

@@ -3,6 +3,25 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Navbar } from "./Navbar";
+import { 
+  Plus, 
+  Search, 
+  MapPin, 
+  Building2, 
+  IndianRupee, 
+  Mail, 
+  Edit3, 
+  Trash2, 
+  Briefcase, 
+  ChevronLeft, 
+  ChevronRight, 
+  Loader2, 
+  Layers, 
+  FileText, 
+  CheckCircle2, 
+  XCircle,
+  Filter
+} from "lucide-react";
 
 export const MyList = () => {
     const navigate = useNavigate();
@@ -55,7 +74,7 @@ export const MyList = () => {
             if (statusFilter) params.append("status", statusFilter);
             if (jobTypeFilter) params.append("jobType", jobTypeFilter);
 
-            const { data } = await axios.get(`https://backend-0a04.onrender.com/api/job/my-postings?${params.toString()}`, {
+            const { data } = await axios.get(`http://localhost:5000/api/job/my-postings?${params.toString()}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -75,7 +94,7 @@ export const MyList = () => {
         } finally {
             setLoading(false);
         }
-    }, [page, statusFilter, jobTypeFilter, navigate]);
+    }, [page, statusFilter, jobTypeFilter, search, navigate]);
 
     useEffect(() => {
         fetchMyPostings();
@@ -91,7 +110,7 @@ export const MyList = () => {
             const token = localStorage.getItem("token");
 
             const { data } = await axios.patch(
-                `https://backend-0a04.onrender.com/api/job/status/${jobId}`,
+                `http://localhost:5000/api/job/status/${jobId}`,
                 { status: nextStatus },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -115,7 +134,7 @@ export const MyList = () => {
 
         try {
             const token = localStorage.getItem("token");
-            const { data } = await axios.delete(`https://backend-0a04.onrender.com/api/job/delete/${jobId}`, {
+            const { data } = await axios.delete(`http://localhost:5000/api/job/delete/${jobId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -152,7 +171,7 @@ export const MyList = () => {
             const token = localStorage.getItem("token");
 
             const { data } = await axios.put(
-                `https://backend-0a04.onrender.com/api/job/update/${jobId}`,
+                `http://localhost:5000/api/job/update/${jobId}`,
                 editFormData,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -176,205 +195,271 @@ export const MyList = () => {
     };
 
     return (
-        <>
+        <div className="min-h-screen bg-slate-950 text-slate-100 pb-12">
             <Navbar />
-            <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
 
-                <div className="max-w-7xl mx-auto">
-
-                    {/* Upper Dashboard Info */}
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-                        <div>
-                            <h1 className="text-2xl font-bold text-slate-900">Vendor Recruitment Panel</h1>
-                            <p className="text-sm text-slate-500 mt-0.5">
-                                You have deployed <span className="font-bold text-slate-900">{pagination.totalJobs} openings</span> down to the pipeline.
-                            </p>
-                        </div>
-                        <Link to="/create-job" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition shadow-sm">
-                            + Post a New Job
-                        </Link>
+                {/* Header Banner */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+                    <div>
+                        <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                            Vendor Recruitment Panel
+                        </h1>
+                        <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                            You have deployed <span className="font-bold text-indigo-400">{pagination.totalJobs} openings</span> to the pipeline.
+                        </p>
                     </div>
+                    <Link 
+                        to="/create-job" 
+                        className="inline-flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition shadow-lg shadow-indigo-600/30"
+                    >
+                        <Plus className="w-4 h-4" />
+                        <span>Post a New Job</span>
+                    </Link>
+                </div>
 
-                    {/* Filters Board Workspace */}
-                    <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm mb-6 flex flex-col md:flex-row items-center gap-4 justify-between">
-                        <form onSubmit={handleSearchSubmit} className="w-full md:max-w-xs flex gap-2">
+                {/* Filters Board Workspace */}
+                <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl shadow-xl mb-6 flex flex-col md:flex-row items-center gap-4 justify-between">
+                    <form onSubmit={handleSearchSubmit} className="w-full md:max-w-xs flex gap-2">
+                        <div className="relative w-full">
+                            <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
                             <input
                                 type="text"
                                 placeholder="Search by title, town..."
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
-                                className="w-full border border-slate-300 rounded-lg px-3 py-1.5 text-xs outline-none focus:border-blue-600"
+                                className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 outline-none focus:border-indigo-500 transition"
                             />
-                            <button type="submit" className="bg-slate-800 hover:bg-slate-900 text-white text-xs px-3 py-1.5 rounded-lg transition">Search</button>
-                        </form>
+                        </div>
+                        <button 
+                            type="submit" 
+                            className="bg-slate-800 hover:bg-slate-700 text-white text-xs px-4 py-2 rounded-xl border border-slate-700 font-medium transition"
+                        >
+                            Search
+                        </button>
+                    </form>
 
-                        <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
+                    <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                        <div className="relative">
                             <select
                                 value={jobTypeFilter}
                                 onChange={(e) => { setJobTypeFilter(e.target.value); setPage(1); }}
-                                className="text-xs bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-600 outline-none"
+                                className="text-xs bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-slate-300 outline-none focus:border-indigo-500 transition cursor-pointer"
                             >
-                                <option value="">All Architectures</option>
-                                <option value="Full-time">Full-time</option>
-                                <option value="Part-time">Part-time</option>
-                                <option value="Internship">Internship</option>
-                                <option value="Remote">Remote</option>
+                                <option value="" className="bg-slate-900">All Job Types</option>
+                                <option value="Full-time" className="bg-slate-900">Full-time</option>
+                                <option value="Part-time" className="bg-slate-900">Part-time</option>
+                                <option value="Internship" className="bg-slate-900">Internship</option>
+                                <option value="Remote" className="bg-slate-900">Remote</option>
                             </select>
+                        </div>
 
-                            <div className="flex items-center gap-1">
-                                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider mr-1">Status:</span>
-                                {[
-                                    { label: "All", value: "" },
-                                    { label: "Active", value: "Active" },
-                                    { label: "Inactive", value: "Closed" } // Submits 'Closed' filter directly to API
-                                ].map((pill) => (
-                                    <button
-                                        key={pill.label}
-                                        onClick={() => { setStatusFilter(pill.value); setPage(1); }}
-                                        className={`text-xs px-2.5 py-1.5 rounded-lg font-medium border ${statusFilter === pill.value ? "bg-slate-900 border-slate-900 text-white" : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"}`}
-                                    >
-                                        {pill.label}
-                                    </button>
-                                ))}
-                            </div>
+                        <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800">
+                            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-2 flex items-center gap-1">
+                                <Filter className="w-3 h-3 text-slate-500" />
+                                Status:
+                            </span>
+                            {[
+                                { label: "All", value: "" },
+                                { label: "Active", value: "Active" },
+                                { label: "Inactive", value: "Closed" }
+                            ].map((pill) => (
+                                <button
+                                    key={pill.label}
+                                    onClick={() => { setStatusFilter(pill.value); setPage(1); }}
+                                    className={`text-xs px-3 py-1 rounded-lg font-medium transition ${
+                                        statusFilter === pill.value 
+                                            ? "bg-indigo-600 text-white shadow-md" 
+                                            : "text-slate-400 hover:text-white hover:bg-slate-900"
+                                    }`}
+                                >
+                                    {pill.label}
+                                </button>
+                            ))}
                         </div>
                     </div>
+                </div>
 
-                    {/* Main Content Stream View */}
-                    {loading ? (
-                        <div className="bg-white border border-slate-200 rounded-xl py-24 flex justify-center shadow-sm">
-                            <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-                        </div>
-                    ) : listings.length === 0 ? (
-                        <div className="bg-white border border-slate-200 rounded-xl py-16 text-center shadow-sm">
-                            <p className="text-sm text-slate-500">No postings found matching your parameters.</p>
-                        </div>
-                    ) : (
-                        <div className="space-y-4">
-                            {listings.map((job) => (
-                                <div key={job._id} className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden p-5 transition hover:shadow-md">
-                                    {editingJobId === job._id ? (
-                                        <form onSubmit={(e) => saveInlineModifications(e, job._id)} className="space-y-4">
-                                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                                <div>
-                                                    <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Position Title</label>
-                                                    <input type="text" name="title" required value={editFormData.title} onChange={handleEditFormChange} className="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 focus:border-blue-600 outline-none" />
-                                                </div>
-                                                <div>
-                                                    <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Company Branding</label>
-                                                    <input type="text" name="companyName" required value={editFormData.companyName} onChange={handleEditFormChange} className="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 focus:border-blue-600 outline-none" />
-                                                </div>
-                                                <div>
-                                                    <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Geographic Location</label>
-                                                    <input type="text" name="location" required value={editFormData.location} onChange={handleEditFormChange} className="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 focus:border-blue-600 outline-none" />
-                                                </div>
-                                            </div>
-
-                                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                                <div>
-                                                    <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Salary Range</label>
-                                                    <input type="text" name="salaryRange" required value={editFormData.salaryRange} onChange={handleEditFormChange} className="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 focus:border-blue-600 outline-none" />
-                                                </div>
-                                                <div>
-                                                    <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Job Setting Mode</label>
-                                                    <select name="jobType" value={editFormData.jobType} onChange={handleEditFormChange} className="w-full text-xs border border-slate-300 bg-white rounded-lg px-3 py-2 focus:border-blue-600 outline-none">
-                                                        <option value="Full-time">Full-time</option>
-                                                        <option value="Part-time">Part-time</option>
-                                                        <option value="Internship">Internship</option>
-                                                        <option value="Remote">Remote</option>
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">HR Email Channel</label>
-                                                    <input type="email" name="contact" required value={editFormData.contact} onChange={handleEditFormChange} className="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 focus:border-blue-600 outline-none" />
-                                                </div>
-                                            </div>
-
+                {/* Main Content Stream View */}
+                {loading ? (
+                    <div className="bg-slate-900 border border-slate-800 rounded-2xl py-24 flex justify-center shadow-xl">
+                        <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
+                    </div>
+                ) : listings.length === 0 ? (
+                    <div className="bg-slate-900 border border-slate-800 rounded-2xl py-16 text-center shadow-xl">
+                        <Briefcase className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+                        <p className="text-sm font-medium text-slate-400">No postings found matching your parameters.</p>
+                    </div>
+                ) : (
+                    <div className="space-y-4">
+                        {listings.map((job) => (
+                            <div key={job._id} className="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden p-5 sm:p-6 transition hover:border-slate-700">
+                                {editingJobId === job._id ? (
+                                    /* Inline Edit Form */
+                                    <form onSubmit={(e) => saveInlineModifications(e, job._id)} className="space-y-4">
+                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                             <div>
-                                                <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Job Description Requirements</label>
-                                                <textarea name="description" rows={3} required value={editFormData.description} onChange={handleEditFormChange} className="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 focus:border-blue-600 outline-none resize-none"></textarea>
+                                                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Position Title</label>
+                                                <input type="text" name="title" required value={editFormData.title} onChange={handleEditFormChange} className="w-full text-xs bg-slate-950 border border-slate-800 text-white rounded-xl px-3 py-2 focus:border-indigo-500 outline-none" />
                                             </div>
-
-                                            <div className="flex justify-end gap-2 pt-2">
-                                                <button type="button" onClick={() => setEditingJobId(null)} className="px-3 py-1.5 border border-slate-300 text-slate-600 rounded-lg text-xs font-semibold hover:bg-slate-50">Cancel</button>
-                                                <button type="submit" disabled={actionLoadingId === job._id} className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold disabled:opacity-50">
-                                                    {actionLoadingId === job._id ? "Saving..." : "Save System Changes"}
-                                                </button>
+                                            <div>
+                                                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Company Branding</label>
+                                                <input type="text" name="companyName" required value={editFormData.companyName} onChange={handleEditFormChange} className="w-full text-xs bg-slate-950 border border-slate-800 text-white rounded-xl px-3 py-2 focus:border-indigo-500 outline-none" />
                                             </div>
-                                        </form>
-                                    ) : (
-                                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                                            <div className="space-y-1">
-                                                <div className="flex items-center gap-2 flex-wrap">
-                                                    <h3 className="text-base font-bold text-slate-900">{job.title}</h3>
-                                                    <span className="text-[10px] bg-slate-100 border border-slate-200 text-slate-600 px-2 py-0.5 rounded font-bold uppercase tracking-wide">{job.jobType}</span>
-
-                                                    {/* Production Ready Dynamic Toggle Button */}
-                                                    <button
-                                                        disabled={actionLoadingId === job._id}
-                                                        onClick={() => handleStatusToggle(job._id, job.status)}
-                                                        className={`inline-flex items-center gap-1 px-2 py-1 rounded text-[10px] font-bold border transition duration-200 ${job.status === "Active"
-                                                            ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
-                                                            : "bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100"
-                                                            }`}
-                                                        title="Click to toggle status"
-                                                    >
-                                                        <span className={`w-1.5 h-1.5 rounded-full ${job.status === "Active" ? "bg-emerald-500" : "bg-rose-500"}`}></span>
-                                                        {actionLoadingId === job._id
-                                                            ? "Updating..."
-                                                            : job.status === "Active"
-                                                                ? "Active"
-                                                                : "Inactive"
-                                                        }
-                                                    </button>
-                                                </div>
-                                                <p className="text-xs text-slate-600 font-medium">{job.companyName} • <span className="text-slate-400">📍 {job.location}</span></p>
-                                                <p className="text-xs text-slate-400 mt-2 line-clamp-2 max-w-3xl">{job.description}</p>
-                                                <div className="pt-2 flex items-center gap-4 text-[11px] text-slate-500 font-medium">
-                                                    <span>💰 Scale: <strong className="text-slate-700">{job.salaryRange}</strong></span>
-                                                    <span>✉️ Contact: <strong className="text-slate-700">{job.contact}</strong></span>
-                                                </div>
-                                            </div>
-
-                                            <div className="flex md:flex-col items-center md:items-end justify-start gap-2 border-t md:border-t-0 border-slate-100 pt-3 md:pt-0">
-                                                <span className="text-[10px] text-slate-400 font-medium hidden md:block">
-                                                    Created: {job.createdAt ? new Date(job.createdAt).toLocaleDateString() : "N/A"}
-                                                </span>
-                                                <div className="flex gap-2 w-full md:w-auto">
-                                                    <button
-                                                        onClick={() => startInlineEditing(job)}
-                                                        className="w-full md:w-auto text-xs bg-white border border-slate-200 hover:border-slate-300 text-slate-700 font-semibold px-3 py-1.5 rounded-lg transition"
-                                                    >
-                                                        Edit Fields
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleDeleteJob(job._id)}
-                                                        className="w-full md:w-auto text-xs bg-red-50 hover:bg-red-100 text-red-600 font-semibold px-3 py-1.5 rounded-lg transition"
-                                                    >
-                                                        Delete
-                                                    </button>
-                                                </div>
+                                            <div>
+                                                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Geographic Location</label>
+                                                <input type="text" name="location" required value={editFormData.location} onChange={handleEditFormChange} className="w-full text-xs bg-slate-950 border border-slate-800 text-white rounded-xl px-3 py-2 focus:border-indigo-500 outline-none" />
                                             </div>
                                         </div>
-                                    )}
-                                </div>
-                            ))}
 
-                            {/* Pagination Layout Footer */}
-                            {pagination.totalPages > 1 && (
-                                <div className="bg-white border border-slate-200 py-3 px-6 flex items-center justify-between rounded-xl shadow-sm">
-                                    <span className="text-xs text-slate-500">Showing <span className="font-bold text-slate-700">{listings.length}</span> of {pagination.totalJobs} listings</span>
-                                    <div className="flex gap-2">
-                                        <button disabled={!pagination.hasPrevPage} onClick={() => setPage(p => p - 1)} className="px-3 py-1 text-xs font-semibold border bg-white text-slate-600 rounded-md disabled:opacity-40 transition">Prev</button>
-                                        <span className="text-xs text-slate-600 font-semibold flex items-center px-1">{page} / {pagination.totalPages}</span>
-                                        <button disabled={!pagination.hasNextPage} onClick={() => setPage(p => p + 1)} className="px-3 py-1 text-xs font-semibold border bg-white text-slate-600 rounded-md disabled:opacity-40 transition">Next</button>
+                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                            <div>
+                                                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Salary Range</label>
+                                                <input type="text" name="salaryRange" required value={editFormData.salaryRange} onChange={handleEditFormChange} className="w-full text-xs bg-slate-950 border border-slate-800 text-white rounded-xl px-3 py-2 focus:border-indigo-500 outline-none" />
+                                            </div>
+                                            <div>
+                                                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Job Setting Mode</label>
+                                                <select name="jobType" value={editFormData.jobType} onChange={handleEditFormChange} className="w-full text-xs bg-slate-950 border border-slate-800 text-white rounded-xl px-3 py-2 focus:border-indigo-500 outline-none">
+                                                    <option value="Full-time" className="bg-slate-900">Full-time</option>
+                                                    <option value="Part-time" className="bg-slate-900">Part-time</option>
+                                                    <option value="Internship" className="bg-slate-900">Internship</option>
+                                                    <option value="Remote" className="bg-slate-900">Remote</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">HR Email Channel</label>
+                                                <input type="email" name="contact" required value={editFormData.contact} onChange={handleEditFormChange} className="w-full text-xs bg-slate-950 border border-slate-800 text-white rounded-xl px-3 py-2 focus:border-indigo-500 outline-none" />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Job Description Requirements</label>
+                                            <textarea name="description" rows={3} required value={editFormData.description} onChange={handleEditFormChange} className="w-full text-xs bg-slate-950 border border-slate-800 text-white rounded-xl px-3 py-2 focus:border-indigo-500 outline-none resize-none"></textarea>
+                                        </div>
+
+                                        <div className="flex justify-end gap-2 pt-2 border-t border-slate-800">
+                                            <button type="button" onClick={() => setEditingJobId(null)} className="px-4 py-2 border border-slate-800 text-slate-300 hover:bg-slate-800 rounded-xl text-xs font-semibold transition">Cancel</button>
+                                            <button type="submit" disabled={actionLoadingId === job._id} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold disabled:opacity-50 transition flex items-center space-x-1.5">
+                                                {actionLoadingId === job._id && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                                                <span>{actionLoadingId === job._id ? "Saving..." : "Save System Changes"}</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                ) : (
+                                    /* Display View */
+                                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                        <div className="space-y-2">
+                                            <div className="flex items-center gap-2.5 flex-wrap">
+                                                <h3 className="text-lg font-extrabold text-white">{job.title}</h3>
+                                                <span className="text-[10px] bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-2.5 py-0.5 rounded-md font-bold uppercase tracking-wider">
+                                                    {job.jobType}
+                                                </span>
+
+                                                {/* Status Toggle Button */}
+                                                <button
+                                                    disabled={actionLoadingId === job._id}
+                                                    onClick={() => handleStatusToggle(job._id, job.status)}
+                                                    className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold border transition duration-200 ${
+                                                        job.status === "Active"
+                                                            ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20"
+                                                            : "bg-rose-500/10 text-rose-400 border-rose-500/30 hover:bg-rose-500/20"
+                                                    }`}
+                                                    title="Click to toggle status"
+                                                >
+                                                    <span className={`w-1.5 h-1.5 rounded-full ${job.status === "Active" ? "bg-emerald-400 animate-pulse" : "bg-rose-400"}`}></span>
+                                                    {actionLoadingId === job._id
+                                                        ? "Updating..."
+                                                        : job.status === "Active"
+                                                            ? "Active"
+                                                            : "Inactive"
+                                                    }
+                                                </button>
+                                            </div>
+
+                                            <div className="flex items-center space-x-3 text-xs text-slate-400 font-medium">
+                                                <span className="flex items-center space-x-1 text-slate-300">
+                                                    <Building2 className="w-3.5 h-3.5 text-slate-500" />
+                                                    <span>{job.companyName}</span>
+                                                </span>
+                                                <span>•</span>
+                                                <span className="flex items-center space-x-1 text-slate-400">
+                                                    <MapPin className="w-3.5 h-3.5 text-slate-500" />
+                                                    <span>{job.location}</span>
+                                                </span>
+                                            </div>
+
+                                            <p className="text-xs text-slate-400 line-clamp-2 max-w-3xl pt-1">
+                                                {job.description}
+                                            </p>
+
+                                            <div className="pt-2 flex flex-wrap items-center gap-4 text-[11px] text-slate-400">
+                                                <span className="flex items-center space-x-1">
+                                                    <IndianRupee className="w-3.5 h-3.5 text-slate-500" />
+                                                    <span>Scale: <strong className="text-slate-200">{job.salaryRange}</strong></span>
+                                                </span>
+                                                <span className="flex items-center space-x-1">
+                                                    <Mail className="w-3.5 h-3.5 text-slate-500" />
+                                                    <span>Contact: <strong className="text-slate-200">{job.contact}</strong></span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center gap-3 border-t md:border-t-0 border-slate-800 pt-3 md:pt-0 shrink-0">
+                                            <span className="text-[10px] text-slate-500 font-medium">
+                                                Created: {job.createdAt ? new Date(job.createdAt).toLocaleDateString() : "N/A"}
+                                            </span>
+                                            <div className="flex gap-2 w-full md:w-auto">
+                                                <button
+                                                    onClick={() => startInlineEditing(job)}
+                                                    className="w-full md:w-auto inline-flex items-center justify-center space-x-1.5 text-xs bg-slate-950 border border-slate-800 hover:bg-slate-800 text-slate-300 font-semibold px-3 py-1.5 rounded-xl transition"
+                                                >
+                                                    <Edit3 className="w-3.5 h-3.5" />
+                                                    <span>Edit</span>
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDeleteJob(job._id)}
+                                                    className="w-full md:w-auto inline-flex items-center justify-center space-x-1.5 text-xs bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500 hover:text-white text-rose-400 font-semibold px-3 py-1.5 rounded-xl transition"
+                                                >
+                                                    <Trash2 className="w-3.5 h-3.5" />
+                                                    <span>Delete</span>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
+                                )}
+                            </div>
+                        ))}
+
+                        {/* Pagination Layout Footer */}
+                        {pagination.totalPages > 1 && (
+                            <div className="bg-slate-900 border border-slate-800 py-3 px-6 flex items-center justify-between rounded-2xl shadow-xl mt-6">
+                                <span className="text-xs text-slate-400">
+                                    Showing <span className="font-bold text-slate-200">{listings.length}</span> of {pagination.totalJobs} listings
+                                </span>
+                                <div className="flex items-center gap-2">
+                                    <button 
+                                        disabled={!pagination.hasPrevPage} 
+                                        onClick={() => setPage(p => p - 1)} 
+                                        className="p-1.5 text-xs font-semibold border border-slate-800 bg-slate-950 text-slate-300 hover:bg-slate-800 rounded-xl disabled:opacity-40 disabled:cursor-not-allowed transition"
+                                    >
+                                        <ChevronLeft className="w-4 h-4" />
+                                    </button>
+                                    <span className="text-xs text-slate-400 font-semibold px-2">
+                                        {page} / {pagination.totalPages}
+                                    </span>
+                                    <button 
+                                        disabled={!pagination.hasNextPage} 
+                                        onClick={() => setPage(p => p + 1)} 
+                                        className="p-1.5 text-xs font-semibold border border-slate-800 bg-slate-950 text-slate-300 hover:bg-slate-800 rounded-xl disabled:opacity-40 disabled:cursor-not-allowed transition"
+                                    >
+                                        <ChevronRight className="w-4 h-4" />
+                                    </button>
                                 </div>
-                            )}
-                        </div>
-                    )}
-                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
-        </>
+        </div>
     );
 };

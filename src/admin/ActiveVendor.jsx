@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { CheckCircle2, Mail, Phone, Calendar, RefreshCw, ShieldCheck } from "lucide-react";
 import { Navbar } from "./Navbar";
-const API_BASE_URL = "https://backend-0a04.onrender.com/api/admin";
+const API_BASE_URL = "http://localhost:5000/api/admin";
 
 export const ActiveVendor = () => {
   const [vendors, setVendors] = useState([]);

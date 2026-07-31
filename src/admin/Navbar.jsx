@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ShieldCheck, Users, Clock, CheckCircle2, BarChart3, Menu, X } from 'lucide-react';
+import { ShieldCheck, Users, Clock, CheckCircle2, BarChart3, Menu, X, LogOut } from 'lucide-react';
 
-export const Navbar = ({ pendingCount = 0 }) => {
+export const Navbar = ({ pendingCount = 0, onLogout }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -12,13 +12,24 @@ export const Navbar = ({ pendingCount = 0 }) => {
     { id: '/admin-dashboard/pending-vendors', label: 'Pending Vendors', icon: Clock, badge: pendingCount },
     { id: '/admin-dashboard/active-vendors', label: 'Active Vendors', icon: CheckCircle2 },
     { id: '/admin-dashboard/jobs', label: 'Job Analytics', icon: BarChart3 },
-    {id: '/admin-dashboard/manage-jobs', label: 'Manage Jobs', icon: BarChart3 },
-    { id: '/admin-dashboard/manage-jobs', label: 'Show Passwords', icon: ShieldCheck },
+    { id: '/admin-dashboard/manage-jobs', label: 'Manage Jobs', icon: BarChart3 },
+    { id: '/admin-dashboard/show-passwords', label: 'Show Passwords', icon: ShieldCheck }, // Fixed duplicate path issue
   ];
 
   const handleNavigation = (path) => {
     navigate(path);
     setIsMobileMenuOpen(false); // Close mobile drawer on navigation
+  };
+
+  const handleLogoutClick = () => {
+    setIsMobileMenuOpen(false);
+    if (onLogout) {
+      onLogout();
+    } else {
+      // Default fallback if no handler is passed: clear local auth & navigate to login
+      localStorage.clear();
+      navigate('/login');
+    }
   };
 
   return (
@@ -70,7 +81,7 @@ export const Navbar = ({ pendingCount = 0 }) => {
             })}
           </div>
 
-          {/* Right Section: Status & Mobile Hamburger Toggle */}
+          {/* Right Section: Status & Actions */}
           <div className="flex items-center space-x-2 sm:space-x-3">
             {/* Status Indicator */}
             <div className="flex items-center space-x-2 bg-slate-950/80 px-2.5 sm:px-3 py-1.5 rounded-full border border-slate-800 text-xs">
@@ -79,6 +90,16 @@ export const Navbar = ({ pendingCount = 0 }) => {
                 Connected
               </span>
             </div>
+
+            {/* Desktop Logout Button */}
+            <button
+              onClick={handleLogoutClick}
+              className="hidden lg:flex items-center space-x-2 px-3 py-1.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white rounded-xl text-xs font-semibold transition-all duration-200"
+              title="Logout"
+            >
+              <LogOut className="w-4 h-4 shrink-0" />
+              <span>Logout</span>
+            </button>
 
             {/* Mobile Hamburger Button */}
             <button
@@ -122,6 +143,17 @@ export const Navbar = ({ pendingCount = 0 }) => {
               </button>
             );
           })}
+
+          {/* Mobile Logout Button */}
+          <div className="pt-2 border-t border-slate-800">
+            <button
+              onClick={handleLogoutClick}
+              className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-rose-400 bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500 hover:text-white transition-all"
+            >
+              <LogOut className="w-5 h-5 shrink-0" />
+              <span>Logout</span>
+            </button>
+          </div>
         </div>
       )}
     </nav>

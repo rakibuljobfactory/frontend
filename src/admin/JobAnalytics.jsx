@@ -4,7 +4,7 @@ import { Navbar } from "./Navbar";
 
 
 
-const BASE_URL = "https://backend-0a04.onrender.com/api/admin";
+const BASE_URL = "http://localhost:5000/api/admin";
 
 export const JobAnalytics = () => {
   const [stats, setStats] = useState({
@@ -34,7 +34,7 @@ export const JobAnalytics = () => {
       }
 
       const res = await axios.get(`${BASE_URL}/analytics`, {
-        headers: { 
+        headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"
         },
@@ -149,7 +149,7 @@ export const JobAnalytics = () => {
               <p className="text-sm text-gray-500 mb-4">
                 Overview of total platform throughput and active status distribution
               </p>
-              
+
               <div className="h-64 border-2 border-dashed border-gray-200 rounded-lg flex flex-col items-center justify-center text-gray-400 bg-gray-50">
                 <svg
                   className="w-12 h-12 mb-2 text-gray-300"

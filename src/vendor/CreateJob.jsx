@@ -3,6 +3,18 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Navbar } from "./Navbar";
+import { 
+  Briefcase, 
+  Building2, 
+  MapPin, 
+  Layers, 
+  IndianRupee, 
+  Mail, 
+  FileText, 
+  PlusCircle, 
+  ArrowLeft,
+  Loader2
+} from "lucide-react";
 
 export const CreateJob = () => {
     const navigate = useNavigate();
@@ -14,7 +26,7 @@ export const CreateJob = () => {
         companyName: "",
         location: "",
         salaryRange: "",
-        jobType: "Full-time", // Valid dynamic default state
+        jobType: "Full-time",
         contact: "",
         description: "",
     });
@@ -30,10 +42,13 @@ export const CreateJob = () => {
             return;
         }
 
-        // Optional: Auto-populate company name if it's cached in the logged-in user object
-        const parsedUser = JSON.parse(storedUser);
-        if (parsedUser.companyName) {
-            setFormData((prev) => ({ ...prev, companyName: parsedUser.companyName }));
+        try {
+            const parsedUser = JSON.parse(storedUser);
+            if (parsedUser?.companyName) {
+                setFormData((prev) => ({ ...prev, companyName: parsedUser.companyName }));
+            }
+        } catch (err) {
+            console.error("Error parsing user from localStorage:", err);
         }
     }, [navigate]);
 
@@ -51,20 +66,19 @@ export const CreateJob = () => {
             setLoading(true);
             const token = localStorage.getItem("token");
 
-            // Execute POST routing pipelines targeting your exact path architecture
             const { data } = await axios.post(
-                "https://backend-0a04.onrender.com/api/job/create",
+                "http://localhost:5000/api/job/create",
                 formData,
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`, // Verified protect middleware handshake payload
+                        Authorization: `Bearer ${token}`,
                     },
                 }
             );
 
             if (data.success) {
                 toast.success(data.message || "Job position published successfully!");
-                navigate("/vendor-dashboard"); // Redirect target path anchor
+                navigate("/vendor-dashboard");
             }
         } catch (error) {
             console.error("Job Creation Error:", error);
@@ -77,144 +91,188 @@ export const CreateJob = () => {
     };
 
     return (
-
-        <>
+        <div className="min-h-screen bg-slate-950 text-slate-100 pb-12">
             <Navbar />
-            <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-10">
 
-                    {/* Form Header */}
-                    <div className="border-b border-slate-100 pb-6 mb-8">
-                        <h1 className="text-2xl font-bold text-slate-900">Post a New Job Opening</h1>
-                        <p className="text-sm text-slate-500 mt-1">
-                            Fill out the information matrices below to publish live slots out to job seekers.
-                        </p>
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+                
+                {/* Back Button */}
+                <button
+                    type="button"
+                    onClick={() => navigate(-1)}
+                    className="inline-flex items-center space-x-2 text-xs font-semibold text-slate-400 hover:text-white mb-6 transition"
+                >
+                    <ArrowLeft className="w-4 h-4" />
+                    <span>Back to Dashboard</span>
+                </button>
+
+                {/* Form Card */}
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
+                    
+                    {/* Header Banner */}
+                    <div className="bg-gradient-to-r from-slate-900 via-indigo-950/50 to-slate-900 border-b border-slate-800 p-6 sm:p-8">
+                        <div className="flex items-center space-x-3 mb-2">
+                            <div className="p-2.5 bg-indigo-500/10 rounded-xl border border-indigo-500/20 text-indigo-400">
+                                <PlusCircle className="w-6 h-6" />
+                            </div>
+                            <div>
+                                <h1 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+                                    Post a New Job Opening
+                                </h1>
+                                <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
+                                    Fill in the job details below to publish live listings to applicants.
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Form Container */}
+                    <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-6">
+                        
                         {/* Row 1: Title & Company Name */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                    Job Title *
+                                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                                    Job Title <span className="text-indigo-400">*</span>
                                 </label>
-                                <input
-                                    type="text"
-                                    name="title"
-                                    required
-                                    value={formData.title}
-                                    onChange={handleChange}
-                                    placeholder="e.g. Full Stack MERN Developer"
-                                    className="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-blue-600 transition"
-                                />
+                                <div className="relative">
+                                    <Briefcase className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                                    <input
+                                        type="text"
+                                        name="title"
+                                        required
+                                        value={formData.title}
+                                        onChange={handleChange}
+                                        placeholder="e.g. Full Stack MERN Developer"
+                                        className="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                                    />
+                                </div>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                    Company Name *
+                                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                                    Company Name <span className="text-indigo-400">*</span>
                                 </label>
-                                <input
-                                    type="text"
-                                    name="companyName"
-                                    required
-                                    value={formData.companyName}
-                                    onChange={handleChange}
-                                    placeholder="e.g. Glorious Lab"
-                                    className="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-blue-600 transition"
-                                />
+                                <div className="relative">
+                                    <Building2 className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                                    <input
+                                        type="text"
+                                        name="companyName"
+                                        required
+                                        value={formData.companyName}
+                                        onChange={handleChange}
+                                        placeholder="e.g. Glorious Lab"
+                                        className="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                                    />
+                                </div>
                             </div>
                         </div>
 
                         {/* Row 2: Location & Job Type */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                    Geographic Location *
+                                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                                    Geographic Location <span className="text-indigo-400">*</span>
                                 </label>
-                                <input
-                                    type="text"
-                                    name="location"
-                                    required
-                                    value={formData.location}
-                                    onChange={handleChange}
-                                    placeholder="e.g. Guwahati, Assam (or Remote)"
-                                    className="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-blue-600 transition"
-                                />
+                                <div className="relative">
+                                    <MapPin className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                                    <input
+                                        type="text"
+                                        name="location"
+                                        required
+                                        value={formData.location}
+                                        onChange={handleChange}
+                                        placeholder="e.g. Guwahati, Assam (or Remote)"
+                                        className="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                                    />
+                                </div>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                    Employment Architecture *
+                                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                                    Employment Type <span className="text-indigo-400">*</span>
                                 </label>
-                                <select
-                                    name="jobType"
-                                    value={formData.jobType}
-                                    onChange={handleChange}
-                                    className="w-full border border-slate-300 rounded-lg px-4 py-2.5 bg-white text-sm outline-none focus:border-blue-600 transition"
-                                >
-                                    <option value="Full-time">Full-time</option>
-                                    <option value="Part-time">Part-time</option>
-                                    <option value="Internship">Internship</option>
-                                    <option value="Remote">Remote</option>
-                                </select>
+                                <div className="relative">
+                                    <Layers className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                                    <select
+                                        name="jobType"
+                                        value={formData.jobType}
+                                        onChange={handleChange}
+                                        className="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition appearance-none cursor-pointer"
+                                    >
+                                        <option value="Full-time" className="bg-slate-900 text-white">Full-time</option>
+                                        <option value="Part-time" className="bg-slate-900 text-white">Part-time</option>
+                                        <option value="Internship" className="bg-slate-900 text-white">Internship</option>
+                                        <option value="Remote" className="bg-slate-900 text-white">Remote</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 
                         {/* Row 3: Salary Range & Contact Email */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                    Salary Compensation Scale *
+                                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                                    Salary Scale <span className="text-indigo-400">*</span>
                                 </label>
-                                <input
-                                    type="text"
-                                    name="salaryRange"
-                                    required
-                                    value={formData.salaryRange}
-                                    onChange={handleChange}
-                                    placeholder="e.g. ₹6 LPA - ₹10 LPA"
-                                    className="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-blue-600 transition"
-                                />
+                                <div className="relative">
+                                    <IndianRupee className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                                    <input
+                                        type="text"
+                                        name="salaryRange"
+                                        required
+                                        value={formData.salaryRange}
+                                        onChange={handleChange}
+                                        placeholder="e.g. ₹6 LPA - ₹10 LPA"
+                                        className="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                                    />
+                                </div>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                    Contact Channels / HR Email *
+                                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                                    Contact / HR Email <span className="text-indigo-400">*</span>
                                 </label>
-                                <input
-                                    type="email"
-                                    name="contact"
-                                    required
-                                    value={formData.contact}
-                                    onChange={handleChange}
-                                    placeholder="e.g. hr@gloriouslab.com"
-                                    className="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-blue-600 transition"
-                                />
+                                <div className="relative">
+                                    <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                                    <input
+                                        type="email"
+                                        name="contact"
+                                        required
+                                        value={formData.contact}
+                                        onChange={handleChange}
+                                        placeholder="e.g. hr@gloriouslab.com"
+                                        className="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                                    />
+                                </div>
                             </div>
                         </div>
 
-                        {/* Full Width: Job Description TextArea */}
+                        {/* Full Width: Job Description */}
                         <div>
-                            <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                Detailed Job Parameters & Requirements *
+                            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                                Job Description & Requirements <span className="text-indigo-400">*</span>
                             </label>
-                            <textarea
-                                name="description"
-                                required
-                                rows={5}
-                                value={formData.description}
-                                onChange={handleChange}
-                                placeholder="Provide a comprehensive operational blueprint regarding everyday task expectations, required technical stacks, and expected experience levels..."
-                                className="w-full border border-slate-300 rounded-lg px-4 py-3 text-sm outline-none focus:border-blue-600 transition resize-y"
-                            ></textarea>
+                            <div className="relative">
+                                <FileText className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
+                                <textarea
+                                    name="description"
+                                    required
+                                    rows={5}
+                                    value={formData.description}
+                                    onChange={handleChange}
+                                    placeholder="Provide responsibilities, key tech stack requirements, and candidate qualifications..."
+                                    className="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition resize-y"
+                                ></textarea>
+                            </div>
                         </div>
 
-                        {/* Interactive Action Control Interface Blocks */}
-                        <div className="flex justify-end gap-4 pt-4 border-t border-slate-100">
+                        {/* Actions */}
+                        <div className="flex items-center justify-end space-x-3 pt-6 border-t border-slate-800">
                             <button
                                 type="button"
                                 onClick={() => navigate(-1)}
-                                className="px-5 py-2.5 border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition"
+                                className="px-5 py-2.5 rounded-xl border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition"
                             >
                                 Cancel
                             </button>
@@ -222,14 +280,21 @@ export const CreateJob = () => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-sm transition shadow-sm disabled:opacity-50"
+                                className="flex items-center space-x-2 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl text-xs transition shadow-lg shadow-indigo-600/30 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                {loading ? "Publishing Stream..." : "Deploy Listing"}
+                                {loading ? (
+                                    <>
+                                        <Loader2 className="w-4 h-4 animate-spin" />
+                                        <span>Publishing...</span>
+                                    </>
+                                ) : (
+                                    <span>Deploy Listing</span>
+                                )}
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
-        </>
+        </div>
     );
 };

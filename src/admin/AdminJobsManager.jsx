@@ -78,7 +78,7 @@ export const AdminJobsManager = () => {
             if (jobTypeFilter) params.append("jobType", jobTypeFilter);
 
             const { data } = await axios.get(
-                `https://backend-0a04.onrender.com/api/job/my-postings?${params.toString()}`,
+                `http://localhost:5000/api/job/my-postings?${params.toString()}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
@@ -118,7 +118,7 @@ export const AdminJobsManager = () => {
             const token = localStorage.getItem("token");
 
             const { data } = await axios.post(
-                "https://backend-0a04.onrender.com/api/job/create",
+                "http://localhost:5000/api/job/create",
                 createFormData,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -152,7 +152,7 @@ export const AdminJobsManager = () => {
             const token = localStorage.getItem("token");
 
             const { data } = await axios.patch(
-                `https://backend-0a04.onrender.com/api/job/status/${jobId}`,
+                `http://localhost:5000/api/job/status/${jobId}`,
                 { status: nextStatus },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -176,7 +176,7 @@ export const AdminJobsManager = () => {
         try {
             const token = localStorage.getItem("token");
             const { data } = await axios.delete(
-                `https://backend-0a04.onrender.com/api/job/delete/${jobId}`,
+                `http://localhost:5000/api/job/delete/${jobId}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
@@ -215,7 +215,7 @@ export const AdminJobsManager = () => {
             const token = localStorage.getItem("token");
 
             const { data } = await axios.put(
-                `https://backend-0a04.onrender.com/api/job/update/${jobId}`,
+                `http://localhost:5000/api/job/update/${jobId}`,
                 editFormData,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -244,7 +244,7 @@ export const AdminJobsManager = () => {
             <Navbar />
 
             <main className="flex-1 py-6 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-                
+
                 {/* Header & Sub-Navigation */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 border-b border-slate-800 pb-5">
                     <div>
@@ -257,21 +257,19 @@ export const AdminJobsManager = () => {
                     <div className="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 self-stretch sm:self-auto">
                         <button
                             onClick={() => setActiveTab("listings")}
-                            className={`flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs font-semibold transition ${
-                                activeTab === "listings"
+                            className={`flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs font-semibold transition ${activeTab === "listings"
                                     ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
                                     : "text-slate-400 hover:text-white"
-                            }`}
+                                }`}
                         >
                             All Admin Jobs ({pagination.totalJobs})
                         </button>
                         <button
                             onClick={() => setActiveTab("create")}
-                            className={`flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs font-semibold transition ${
-                                activeTab === "create"
+                            className={`flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs font-semibold transition ${activeTab === "create"
                                     ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
                                     : "text-slate-400 hover:text-white"
-                            }`}
+                                }`}
                         >
                             + Post New Job
                         </button>
@@ -281,7 +279,7 @@ export const AdminJobsManager = () => {
                 {/* TAB 1: LISTINGS & MANAGEMENT */}
                 {activeTab === "listings" && (
                     <div className="space-y-6">
-                        
+
                         {/* Search & Filter Bar */}
                         <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col md:flex-row items-center gap-4 justify-between">
                             <form onSubmit={handleSearchSubmit} className="w-full md:max-w-xs flex gap-2">
@@ -319,11 +317,10 @@ export const AdminJobsManager = () => {
                                         <button
                                             key={pill.label}
                                             onClick={() => { setStatusFilter(pill.value); setPage(1); }}
-                                            className={`text-xs px-2.5 py-1 rounded-md font-medium transition ${
-                                                statusFilter === pill.value
+                                            className={`text-xs px-2.5 py-1 rounded-md font-medium transition ${statusFilter === pill.value
                                                     ? "bg-indigo-600 text-white"
                                                     : "text-slate-400 hover:text-slate-200"
-                                            }`}
+                                                }`}
                                         >
                                             {pill.label}
                                         </button>
@@ -408,11 +405,10 @@ export const AdminJobsManager = () => {
                                                         <button
                                                             disabled={actionLoadingId === job._id}
                                                             onClick={() => handleStatusToggle(job._id, job.status)}
-                                                            className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-bold border transition duration-200 ${
-                                                                job.status === "Active"
+                                                            className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-bold border transition duration-200 ${job.status === "Active"
                                                                     ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20"
                                                                     : "bg-rose-500/10 text-rose-400 border-rose-500/30 hover:bg-rose-500/20"
-                                                            }`}
+                                                                }`}
                                                         >
                                                             <span className={`w-1.5 h-1.5 rounded-full ${job.status === "Active" ? "bg-emerald-400" : "bg-rose-400"}`}></span>
                                                             {actionLoadingId === job._id ? "Updating..." : job.status === "Active" ? "Active" : "Inactive"}
@@ -423,7 +419,7 @@ export const AdminJobsManager = () => {
                                                         {job.companyName} • <span className="text-slate-400">📍 {job.location}</span>
                                                     </p>
                                                     <p className="text-xs text-slate-400 line-clamp-2 max-w-3xl">{job.description}</p>
-                                                    
+
                                                     <div className="pt-2 flex flex-wrap items-center gap-4 text-[11px] text-slate-400">
                                                         <span>💰 Scale: <strong className="text-slate-200">{job.salaryRange}</strong></span>
                                                         <span>✉️ Contact: <strong className="text-slate-200">{job.contact}</strong></span>

@@ -55,8 +55,8 @@ function App() {
       <div className="min-h-screen bg-slate-50">
         <Routes>
           {/* Public / Semi-Public Routes */}
-          {/* <Route path="/home" element={<Home />} /> */}
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Login />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           {/* Auth Redirects: If already logged in, skip the Auth layout screens */}
